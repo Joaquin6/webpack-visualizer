@@ -1,13 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import createClass from 'create-react-class';
 import ChartWithDetails from '../shared/components/chart-with-details';
 import Footer from '../shared/components/footer';
 import buildHierarchy from '../shared/buildHierarchy';
-import {getAssetsData, getBundleDetails, ERROR_CHUNK_MODULES} from '../shared/util/stat-utils';
+import {
+    getAssetsData,
+    getBundleDetails,
+    ERROR_CHUNK_MODULES
+} from '../shared/util/stat-utils';
 
-
-export default React.createClass({
+export default createClass({
     propTypes: {
-        stats: React.PropTypes.object
+        stats: PropTypes.object
     },
 
     getInitialState() {
@@ -58,7 +63,7 @@ export default React.createClass({
         let assetList;
         let bundleDetails = {};
 
-        if (this.state.stats){
+        if (this.state.stats) {
             bundleDetails = getBundleDetails({
                 assets: this.state.assets,
                 selectedAssetIndex: this.state.selectedAssetIndex
@@ -68,9 +73,16 @@ export default React.createClass({
         if (this.state.assets.length > 1) {
             assetList = (
                 <div>
-                    <select onChange={this.onAssetChange} value={this.state.selectedAssetIndex}>
+                    <select
+                        onChange={this.onAssetChange}
+                        value={this.state.selectedAssetIndex}
+                    >
                         <option value={0}>All Chunks</option>
-                        {this.state.assets.map((asset, i) => <option key={i} value={i + 1}>{asset.name}</option>)}
+                        {this.state.assets.map((asset, i) => (
+                            <option key={i} value={i + 1}>
+                                {asset.name}
+                            </option>
+                        ))}
                     </select>
                 </div>
             );
@@ -82,9 +94,14 @@ export default React.createClass({
 
                 {assetList}
 
-                <ChartWithDetails chartData={this.state.chartData} bundleDetails={bundleDetails} />
+                <ChartWithDetails
+                    chartData={this.state.chartData}
+                    bundleDetails={bundleDetails}
+                />
 
-                {this.state.error && <div className="errorMessage">{this.state.error}</div>}
+                {this.state.error && (
+                    <div className="errorMessage">{this.state.error}</div>
+                )}
 
                 <Footer />
             </div>

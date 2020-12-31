@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "lwlz.autofix",
+        "esbenp.prettier-vscode",
+        "hridoy.d3-js-snippets"
+    ]
+}

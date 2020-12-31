@@ -1,0 +1,46 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"label": "npm: build",
+			"detail": "npm run buildsite && npm run buildplugin"
+		},
+		{
+			"type": "npm",
+			"script": "buildplugin",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: buildplugin",
+			"detail": "./node_modules/.bin/webpack --config webpack.prod.js ./src/plugin/main.jsx ./lib/pluginmain.js"
+		},
+		{
+			"type": "npm",
+			"script": "buildsite",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: buildsite",
+			"detail": "./node_modules/.bin/webpack ./src/site/main.jsx dist-site/build.js --config webpack.prod.js && babel-node ./src/site/serverRender.js"
+		},
+		{
+			"type": "npm",
+			"script": "dev",
+			"problemMatcher": [],
+			"label": "npm: dev",
+			"detail": "./node_modules/.bin/webpack-dev-server --config webpack.dev.js"
+		},
+		{
+			"type": "npm",
+			"script": "lint",
+			"problemMatcher": [],
+			"label": "npm: lint",
+			"detail": "./node_modules/.bin/eslint src --ext .js,.jsx"
+		}
+	]
+}

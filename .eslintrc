@@ -1,5 +1,10 @@
 {
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:prettier/recommended",
+        "prettier/react"
+    ],
     "plugins": [
         "react"
     ],
@@ -8,10 +13,43 @@
         "es6": true,
         "node": true
     },
-    "ecmaFeatures": {
-        "experimentalObjectRestSpread": true,
-        "jsx": true,
-        "modules": true
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true,
+            "jsx": true,
+            "modules": true
+        }
+    },
+    "settings": {
+        "react": {
+            "createClass": "createReactClass", // Regex for Component Factory to use,
+            // default to "createReactClass"
+            "pragma": "React", // Pragma to use, default to "React"
+            "fragment": "Fragment", // Fragment to use (may be a property of <pragma>), default to "Fragment"
+            "version": "detect", // React version. "detect" automatically picks the version you have installed.
+            // You can also use `16.0`, `16.3`, etc, if you want to override the detected value.
+            // default to latest and warns if missing
+            // It will default to "detect" in the future
+            "flowVersion": "0.53" // Flow version
+        },
+        "propWrapperFunctions": [
+            // The names of any function used to wrap propTypes, e.g. `forbidExtraProps`. If this isn't set, any propTypes wrapped in a function will be skipped.
+            "forbidExtraProps",
+            {
+                "property": "freeze",
+                "object": "Object"
+            }
+        ],
+        "linkComponents": [
+            // Components used as alternatives to <a> for linking, eg. <Link to={ url } />
+            "Hyperlink",
+            {
+                "name": "Link",
+                "linkAttribute": "to"
+            }
+        ]
     },
     "rules": {
         "no-alert": 2,
@@ -40,51 +78,93 @@
         "no-shadow-restricted-names": 2,
         "no-spaced-func": 2,
         "no-undef-init": 2,
-        "no-unused-vars": [2, {"vars": "all", "args": "none"}],
-        "no-use-before-define": [2, "nofunc"],
+        "no-unused-vars": [
+            2,
+            {
+                "vars": "all",
+                "args": "none"
+            }
+        ],
+        "no-use-before-define": [
+            2,
+            "nofunc"
+        ],
         "no-with": 2,
-        
         "arrow-spacing": 1,
-        "brace-style": [2, "1tbs"],
+        "brace-style": [
+            2,
+            "1tbs"
+        ],
         "camelcase": 1,
         "comma-dangle": 1,
         "comma-spacing": 1,
-        "curly": [2, "all"],
-        "dot-notation": [1, {"allowKeywords": true}],
-        "eqeqeq": [2, "smart"],
+        "curly": [
+            2,
+            "all"
+        ],
+        "dot-notation": [
+            1,
+            {
+                "allowKeywords": true
+            }
+        ],
+        "eqeqeq": [
+            2,
+            "smart"
+        ],
         "indent": 2,
         "jsx-quotes": 1,
         "key-spacing": 1,
         "new-cap": 1,
         "new-parens": 2,
-        "quotes": [2, "single"],
+        "quotes": [
+            2,
+            "single"
+        ],
         "semi": 2,
         "semi-spacing": 1,
         "space-infix-ops": 1,
-        "space-return-throw-case": 1,
+        "keyword-spacing": 1,
         "space-unary-ops": 1,
-        "strict": [0, "function"],
-        "wrap-iife": [2, "any"],
-        "yoda": [1, "never"],
-        
+        "strict": [
+            0,
+            "function"
+        ],
+        "wrap-iife": [
+            2,
+            "any"
+        ],
+        "yoda": [
+            1,
+            "never"
+        ],
         "react/jsx-closing-bracket-location": 1,
         "react/jsx-curly-spacing": 1,
         "react/jsx-indent-props": 1,
-        "react/jsx-max-props-per-line": [1, {"maximum": 3}],
+        "react/jsx-max-props-per-line": [
+            1,
+            {
+                "maximum": 3
+            }
+        ],
         "react/jsx-no-duplicate-props": 2,
         "react/jsx-no-undef": 2,
-        "react/jsx-sort-prop-types": 1,
         "react/jsx-uses-react": 2,
         "react/jsx-uses-vars": 2,
-        "react/no-did-mount-set-state": [2, "allow-in-func"],
-        "react/no-did-update-set-state": 2,
+        "react/no-did-mount-set-state": 2,
         "react/no-direct-mutation-state": 2,
         "react/no-multi-comp": 1,
         "react/no-unknown-property": 2,
-        "react/prop-types": [2, {ignore: "children"}],
+        "react/prop-types": [
+            2,
+            {
+                "ignore": [
+                    "children"
+                ]
+            }
+        ],
         "react/react-in-jsx-scope": 2,
         "react/self-closing-comp": 1,
-        "react/sort-comp": 2,
-        "react/wrap-multilines": 2
+        "react/sort-comp": 2
     }
 }

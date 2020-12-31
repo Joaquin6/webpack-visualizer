@@ -1,47 +1,82 @@
 {
   "name": "webpack-visualizer-plugin",
-  "version": "0.1.11",
+  "version": "0.1.0",
   "main": "lib/plugin.js",
-  "author": "Chris Bateman (http://cbateman.com/)",
+  "author": "Joaquin Briceno (joaquinbriceno1@gmail.com)",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Joaquin6/webpack-visualizer.git"
+  },
+  "engines": {
+    "node": ">=10.15.0",
+    "npm": ">=6.14.0"
+  },
   "files": [
     "lib",
     "README.md"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:chrisbateman/webpack-visualizer.git"
-  },
   "scripts": {
-    "build": "npm run buildsite && npm run buildplugin",
-    "prebuildplugin": "rm -rf lib && mkdir lib",
-    "buildplugin": "webpack src/plugin/main.jsx lib/pluginmain.js --config webpack.prod.js",
-    "postbuildplugin": "babel src/plugin/plugin.js --out-file lib/plugin.js && cp src/shared/style.css lib",
-    "prebuildsite": "rm -rf dist-site && mkdir dist-site",
-    "buildsite": "webpack src/site/main.jsx dist-site/build.js --config webpack.prod.js && babel-node src/site/serverRender.js",
-    "postbuildsite": "cp src/shared/style.css test/stats-demo.json dist-site",
-    "dev": "webpack-dev-server --config webpack.dev.js",
-    "lint": "eslint src --ext .js,.jsx",
+    "clean:plugin": "rm -rf lib",
+    "clean:site": "rm -rf dist-site",
+    "clean": "npm-run-all --sequential clean:**",
+    "copy:styles:plugin": "cp src/shared/style.css lib",
+    "copy:styles:site": "cp src/shared/style.css dist-site",
+    "copy:styles": "npm-run-all --sequential copy:styles:**",
+    "copy:stats:site": "cp test/stats-demo.json dist-site",
+    "copy:stats": "npm-run-all --sequential copy:stats:**",
+    "copy": "npm run copy:styles && npm run copy:stats",
+    "sitehtml": "babel-node ./src/site/serverRender.js",
+    "shared": "npm run sitehtml && npm run copy",
+    "prebuild": "npm run clean",
+    "build": "cross-env NODE_ENV=production ./node_modules/.bin/webpack --env production",
+    "postbuild": "npm run shared",
+    "predev-build": "npm run clean",
+    "dev-build": "cross-env NODE_ENV=development ./node_modules/.bin/webpack --env development",
+    "postdev-build": "npm run shared",
+    "predev:server": "npm run dev-build",
+    "dev:server": "./node_modules/.bin/webpack-dev-server --env type=hot --env development --hot",
+    "dev:watcher": "./node_modules/.bin/onchange -v ./src/** -- npm run dev-build",
+    "dev": "./node_modules/.bin/npm-run-all --parallel dev:**",
+    "lint": "./node_modules/.bin/eslint src --ext .js,.jsx",
     "preversion": "npm run lint && npm run build",
     "publishSite": "git checkout gh-pages && cp dist-site/* . && git add . && git commit -m 'release' && git push origin gh-pages && git checkout master"
   },
   "dependencies": {
-    "d3": "^3.5.6",
-    "mkdirp": "^0.5.1",
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "@babel/runtime": "^7.12.5",
+    "babel-eslint": "^10.1.0",
+    "create-react-class": "^15.7.0",
+    "d3": "^6.3.1",
+    "mkdirp": "^1.0.4",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
-    "babel": "^5.8.23",
-    "babel-core": "^5.8.25",
-    "babel-loader": "^5.3.2",
-    "eslint": "^1.6.0",
-    "eslint-plugin-react": "^3.5.1",
-    "merge": "^1.2.0",
-    "webpack": "^1.12.2",
-    "webpack-dev-server": "^1.12.0"
-  },
-  "engines": {
-    "npm": ">=2.13.0"
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "@webpack-cli/init": "^1.1.0",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.16.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.0",
+    "eslint-plugin-react": "^7.22.0",
+    "fs-extra": "^9.0.1",
+    "js-config-webpack-plugin": "^2.0.1",
+    "merge": "^2.1.0",
+    "npm-run-all": "^4.1.5",
+    "onchange": "^7.1.0",
+    "path-browserify": "^1.0.1",
+    "terser-webpack-plugin": "^5.0.3",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.0",
+    "webpack-config-utils": "^2.3.1",
+    "webpack-dev-server": "^4.0.0-beta.0"
   }
 }

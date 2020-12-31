@@ -1,5 +1,5 @@
 
-export const ERROR_CHUNK_MODULES = `Unfortunately, it looks like your stats don't include chunk-specific module data. See below for details.`;
+export const ERROR_CHUNK_MODULES = 'Unfortunately, it looks like your stats don\'t include chunk-specific module data. See below for details.';
 
 
 export function getAssetsData(assets, chunks) {

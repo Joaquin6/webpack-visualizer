@@ -1,0 +1,14 @@
+{
+    "editor.formatOnSave": false,
+    "files.associations": {
+        ".babelrc": "json",
+        ".jshintrc": "json",
+        ".prettierrc": "json",
+        "*.jsx": "javascript"
+    },
+    "javascript.validate.enable": true,
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    }
+}
